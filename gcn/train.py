@@ -13,6 +13,8 @@ np.random.seed(seed)
 tf.set_random_seed(seed)
 
 # Settings
+# flags主要是在用命令行执行程序时，需要传些参数
+# 具体来说， 第一个是参数名称，第二个参数是默认值，第三个是参数描述
 flags = tf.app.flags
 FLAGS = flags.FLAGS
 flags.DEFINE_string('dataset', 'cora', 'Dataset string.')  # 'cora', 'citeseer', 'pubmed'
@@ -25,10 +27,10 @@ flags.DEFINE_float('weight_decay', 5e-4, 'Weight for L2 loss on embedding matrix
 flags.DEFINE_integer('early_stopping', 10, 'Tolerance for early stopping (# of epochs).')
 flags.DEFINE_integer('max_degree', 3, 'Maximum Chebyshev polynomial degree.')
 
-# Load data
+# Load data， 加载数据集
 adj, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data(FLAGS.dataset)
 
-# Some preprocessing
+# Some preprocessing，数据的预处理过程，总的来说，
 features = preprocess_features(features)
 if FLAGS.model == 'gcn':
     support = [preprocess_adj(adj)]
